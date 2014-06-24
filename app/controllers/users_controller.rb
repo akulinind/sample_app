@@ -52,6 +52,11 @@ class UsersController < ApplicationController
     end
 
     # Before filters
+    before_filter :signed_in_user_filter, only: [:new, :create]
+
+    def signed_in_user_filter
+      redirect_to root_path, notice: "Already logged in" if signed_in?
+    end    
 
     def signed_in_user
       unless signed_in?
